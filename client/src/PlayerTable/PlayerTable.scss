@@ -1,9 +1,10 @@
 @import 'variables';
 
 $header-height: 2.5rem;
+$menu-height: 2.5rem;
 
 .player-table {
-  margin-top: 3.5rem;
+  margin-top: 6rem;
   padding-top: calc(#{$header-height} + 1px); // 1px for border of header
 }
 
@@ -12,13 +13,23 @@ $header-height: 2.5rem;
   table-layout: fixed;
   width: 100%;
 
+  &--menu {
+    background-color: $pearl;
+    border-bottom: 2px solid $stone;
+    left: 0;
+    position: fixed;
+    top: 3.5rem;
+    z-index: 2;
+  }
+
   &--fixed {
     background-color: $pearl;
     border-bottom: 1px solid $fog;
     left: 0;
     position: fixed;
-    top: 3.5rem;
+    top: 2.5rem;
     z-index: 1;
+    margin-top: 3.5rem;
   }
 
   &--body {
@@ -66,6 +77,30 @@ $header-height: 2.5rem;
   &__native {
     width: 6rem;
   }
+
+  &__control {
+    width: 6rem;
+  }
+
+  &--button {
+    height: 2rem;
+    margin: .25rem;
+    background-color: $moss;
+    border-radius: 10px;
+  }
+  &--button:hover {
+    background-color: $slate;
+  }
+
+  &__pencil::after{
+    font-size: 2rem;
+    content: '\270E';
+  }
+
+  &__delete::after{
+    font-size: 2rem;
+    content: '\274C';
+  }
 }
 
 .country {
@@ -75,5 +110,71 @@ $header-height: 2.5rem;
 
   .avatar {
     margin-right: 0.5rem;
+  }
+}
+
+.modal-container {
+  background-color: $snow;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50rem;
+  height: 60vh;
+  border-color: $blue-steel;
+  border-radius: 10px;
+
+  &--header {
+    width: 100%;
+    height: 3rem;
+    background-color: $graphite;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  &--header-font {
+    color: $snow;
+    position: relative;
+    top: .75rem;
+  }
+
+  &--body {
+    padding-bottom: 2.5rem;
+    padding: 0 1rem;
+    overflow-y: auto;
+  }
+
+  &--field-container {
+    margin: .5em 0;
+  }
+
+  &--label {
+    width: 30%;
+    float: left;
+  }
+
+  &--input {
+    width: 60%;
+  }
+
+  &--footer {
+    position: absolute;
+    bottom: 0;
+    height: 2.5rem;
+    width: 100%;
+    border-top: solid 1px $stone;
+  }
+
+  &--button {
+    float: right;
+    height: 2rem;
+    margin: .25rem;
+    background-color: $moss;
+    border-radius: 10px;
+  }
+  &--button:hover {
+    background-color: $slate;
   }
 }
