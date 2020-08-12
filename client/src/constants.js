@@ -250,3 +250,5 @@ export const COUNTRIES = {
   QA: 'Qatar',
   MZ: 'Mozambique',
 };
+
+export const PAGE_SIZE = 25;

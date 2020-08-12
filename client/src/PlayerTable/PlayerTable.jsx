@@ -6,6 +6,8 @@ import { fetchPlayersSuccess } from '../appState/actions';
 import './PlayerTable.scss';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
+import TableFooter from './TableFooter';
+import { PAGE_SIZE } from '../constants';
 
 const getPlayers = (state) => state.playerIds.map((id) => state.players[id]);
 
@@ -13,7 +15,7 @@ const PlayerTable = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     (async function fetchPlayers() {
-      const response = await fetch('http://localhost:3001/players', {
+      const response = await fetch(`http://localhost:3001/players?size=${PAGE_SIZE}&from=0`, {
         headers: {
           Accept: 'application/json',
         },
@@ -35,6 +37,7 @@ const PlayerTable = () => {
     >
       <TableHeader />
       <TableBody players={players} />
+      <TableFooter />
     </div>
   );
 };

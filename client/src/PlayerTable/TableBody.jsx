@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Flags from 'react-world-flags';
 
 import Avatar from '../Avatar';
-import { COUNTRIES } from '../constants';
+import { COUNTRIES, PAGE_SIZE } from '../constants';
 import PlayerTableModal from './PlayerTableModal/PlayerTableModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchPlayersSuccess } from '../appState/actions';
 import Modal from '@material-ui/core/Modal';
+import './PlayerTableModal/PlayerTableModal.scss';
 
 const TableBody = ({ players }) => {
   const [name, setName] = React.useState('');
@@ -19,6 +20,9 @@ const TableBody = ({ players }) => {
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const dispatch = useDispatch();
 
+  const getPageDataFrom = (state) => state.page.from;
+  const pageDataFrom = useSelector(getPageDataFrom);
+
   const editPlayerClick = (
     setWinnings,
     name,
@@ -27,13 +31,16 @@ const TableBody = ({ players }) => {
     imageUrl,
     id
   ) => {
+    if(!document.getElementById("player-form").checkValidity()){
+      return;
+  }
     if (winnings === '') {
       setWinnings(0);
     }
     let data = {
       name,
       country,
-      winnings: parseInt(winnings),
+      winnings: parseFloat(winnings),
       imageUrl,
     };
     (async function editPlayer() {
@@ -45,11 +52,14 @@ const TableBody = ({ players }) => {
         body: JSON.stringify(data),
       });
 
-      const response = await fetch('http://localhost:3001/players?size=60', {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3001/players?size=${PAGE_SIZE}&from=${pageDataFrom}`,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      );
 
       const json = await response.json();
       dispatch(fetchPlayersSuccess(json));
@@ -57,19 +67,20 @@ const TableBody = ({ players }) => {
     setOpen(false);
   };
 
-  const deletePlayerClick = (
-    id
-  ) => {
+  const deletePlayerClick = (id) => {
     (async function deletePlayer() {
       await fetch(`http://localhost:3001/players/${id}`, {
         method: 'DELETE',
       });
 
-      const response = await fetch('http://localhost:3001/players?size=60', {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3001/players?size=${PAGE_SIZE}&from=${pageDataFrom}`,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      );
 
       const json = await response.json();
       dispatch(fetchPlayersSuccess(json));
@@ -104,7 +115,6 @@ const TableBody = ({ players }) => {
     setImageUrl(currentRowData.imageUrl);
     setId(currentRowData.id);
     setOpen(true);
-
   };
 
   return (
@@ -143,13 +153,18 @@ const TableBody = ({ players }) => {
                   className="table__pencil"
                   onClick={openEditModal}
                 />
-                <span role="button" className="table__delete" onClick={openDeleteModal} />
+                <span
+                  role="button"
+                  className="table__delete"
+                  onClick={openDeleteModal}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       <PlayerTableModal
+        title="Edit Player"
         open={open}
         setOpen={setOpen}
         submitFn={editPlayerClick}
@@ -167,10 +182,10 @@ const TableBody = ({ players }) => {
       >
         <div className="modal-container">
           <div className="modal-container--header">
-            <span className="modal-container--header-font">Create Player</span>
+            <span className="modal-container--header-font">Delete Player</span>
           </div>
           <div className="modal-container--body">
-                <p>Are you sure you want to delete {name}?</p>
+            <p>Are you sure you want to delete {name}?</p>
           </div>
           <div className="modal-container--footer">
             <input
@@ -183,9 +198,7 @@ const TableBody = ({ players }) => {
               className="modal-container--button"
               type="submit"
               value="Submit"
-              onClick={() =>
-                deletePlayerClick(id)
-              }
+              onClick={() => deletePlayerClick(id)}
             />
           </div>
         </div>

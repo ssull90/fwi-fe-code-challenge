@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import { COUNTRIES } from '../../constants';
 import PropTypes from 'prop-types';
+import './PlayerTableModal.scss';
 
 const PlayerTableModal = ({
+  title,
   open,
   setOpen,
   submitFn,
@@ -19,24 +21,15 @@ const PlayerTableModal = ({
   const [imageUrl, setImageUrl] = React.useState(imageUrlParam);
   const [id, setId] = React.useState(idParam);
 
-useEffect(() => {
+  useEffect(() => {
     setName(nameParam);
     setCountry(countryParam);
     setWinnings(winningsParam);
     setImageUrl(imageUrlParam);
     setId(idParam);
-}, [nameParam,
-countryParam,
-winningsParam,
-imageUrlParam,
-idParam]) 
+  }, [nameParam, countryParam, winningsParam, imageUrlParam, idParam]);
 
   const handleClose = () => {
-    setName('');
-    setCountry('US');
-    setWinnings(0);
-    setImageUrl('');
-    setId('');
     setOpen(false);
   };
 
@@ -68,9 +61,9 @@ idParam])
     >
       <div className="modal-container">
         <div className="modal-container--header">
-          <span className="modal-container--header-font">Create Player</span>
+          <span className="modal-container--header-font">{title}</span>
         </div>
-        <form>
+        <form id="player-form">
           <div className="modal-container--body">
             <div className="modal-container--field-container">
               <label className="modal-container--label" htmlFor="name">
@@ -142,7 +135,7 @@ idParam])
           <div className="modal-container--footer">
             <input
               className="modal-container--button"
-              type="reset"
+              type="button"
               value="Cancel"
               onClick={handleClose}
             />
@@ -162,6 +155,7 @@ idParam])
 };
 
 PlayerTableModal.propTypes = {
+  title: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   submitFn: PropTypes.func.isRequired,
