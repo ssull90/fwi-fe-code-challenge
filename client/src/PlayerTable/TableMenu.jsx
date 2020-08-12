@@ -34,8 +34,6 @@ const TableMenu = () => {
         body: JSON.stringify(data),
       });
 
-      console.log(re);
-
       const response = await fetch(
         `http://localhost:3001/players?size=${PAGE_SIZE}&from=${pageDataFrom}`,
         {

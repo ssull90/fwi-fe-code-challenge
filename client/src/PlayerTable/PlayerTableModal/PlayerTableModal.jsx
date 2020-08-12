@@ -4,6 +4,8 @@ import { COUNTRIES } from '../../constants';
 import PropTypes from 'prop-types';
 import './PlayerTableModal.scss';
 
+
+// Added a player modal that has a form used to add or edit players
 const PlayerTableModal = ({
   title,
   open,
@@ -21,6 +23,7 @@ const PlayerTableModal = ({
   const [imageUrl, setImageUrl] = React.useState(imageUrlParam);
   const [id, setId] = React.useState(idParam);
 
+  // useEffect here to allow this component to update on prop changes
   useEffect(() => {
     setName(nameParam);
     setCountry(countryParam);

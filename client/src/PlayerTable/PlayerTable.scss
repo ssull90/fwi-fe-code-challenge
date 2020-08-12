@@ -71,6 +71,11 @@ $menu-height: 2.5rem;
     border-top: 2px solid $stone;
   }
 
+  &__footer-right {
+    float: right;
+    padding: .5em;
+  }
+
   &__avatar {
     text-align: center;
     width: 4rem;

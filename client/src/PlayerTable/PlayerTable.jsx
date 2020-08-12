@@ -11,6 +11,7 @@ import { PAGE_SIZE } from '../constants';
 
 const getPlayers = (state) => state.playerIds.map((id) => state.players[id]);
 
+//Changed this to use a globally changed page size so it goes to all files.
 const PlayerTable = () => {
   const dispatch = useDispatch();
   useEffect(() => {

@@ -23,6 +23,7 @@ const TableBody = ({ players }) => {
   const getPageDataFrom = (state) => state.page.from;
   const pageDataFrom = useSelector(getPageDataFrom);
 
+  //This edits players then recalls rest to update frontend
   const editPlayerClick = (
     setWinnings,
     name,
@@ -67,6 +68,7 @@ const TableBody = ({ players }) => {
     setOpen(false);
   };
 
+  // fetch to delete players
   const deletePlayerClick = (id) => {
     (async function deletePlayer() {
       await fetch(`http://localhost:3001/players/${id}`, {
@@ -94,6 +96,7 @@ const TableBody = ({ players }) => {
     setDeleteOpen(false);
   };
 
+  // worked backward from td to row to get the data-key, could also add data-key to td to reduce the work.
   const openDeleteModal = (e) => {
     const rowIndex = e.currentTarget.parentNode.parentNode.getAttribute(
       'data-key'
