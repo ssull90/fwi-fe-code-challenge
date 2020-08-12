@@ -131,11 +131,11 @@ added any additional steps.
 
 ### Challenge Checklist
 
-- [ ] Create Player
-- [ ] Modify Player
-- [ ] Delete Player
+- [x] Create Player
+- [x] Modify Player
+- [x] Delete Player
 - [ ] Implement sorting (optional)
-- [ ] Lazy loading/pagination (optional)
+- [x] Lazy loading/pagination (optional)
 - [ ] Tests (optional)
 
 ## API Documentation
@@ -192,7 +192,7 @@ Response:
 
 #### Get All Players (Paginated)
 
-This endpoint will also support pagination using the `start` and `size` query
+This endpoint will also support pagination using the `from` and `size` query
 parameters:
 
 ```sh
